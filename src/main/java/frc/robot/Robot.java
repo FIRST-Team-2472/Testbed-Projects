@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 
@@ -23,10 +24,38 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     The_One_Motor_To_Rule_Them_All = new CANSparkMax(Can_Spark_ID, MotorType.kBrushless);
     TheOtherOne = new TalonFX(FalconID);
+     // Set talon parameters to default values
+      TheOtherOne.configFactoryDefault();
+
+
+    TheOtherOne.setSensorPhase(true);  // correct encoder to motor direction
+     
+    // Tell the talon that he has a quad encoder
+    TheOtherOne.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+   
+    // Set minimum output (closed loop)  to 0 for now
+    TheOtherOne.configNominalOutputForward(0, 30);
+    TheOtherOne.configNominalOutputReverse(0, 30);
+    
+    // Set maximum forward and backward to full speed
+    TheOtherOne.configPeakOutputForward(1, 30);
+    TheOtherOne.configPeakOutputReverse(-1, 30);
+
+    // Motion magic cruise (max speed) is 100 counts per 100 ms
+		TheOtherOne.configMotionCruiseVelocity(500, 30);
+
+    // Motion magic acceleration is 50 counts
+		TheOtherOne.configMotionAcceleration(100, 30);
+
+		// Zero the sensor once on robot boot up 
+		TheOtherOne.setSelectedSensorPosition(0, 0, 30);
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+
+
+  }
 
   @Override
   public void autonomousInit() {
@@ -35,7 +64,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    SmartDashboard.putNumber("Faclcon Motor Value", TheOtherOne.getSelectedSensorPosition());
+  }
 
   @Override
   public void teleopInit() {}
