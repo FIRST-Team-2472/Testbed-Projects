@@ -6,6 +6,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,15 +16,18 @@ import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
 
+  private static final int TalonSRX_ID = 30;
   private static final int Can_Spark_ID = 40;
   private static final int FalconID = 50;
   private TalonFX TheOtherOne;
-  private CANSparkMax The_One_Motor_To_Rule_Them_All;
+  private CANSparkMax Spike_Motor;
+  private TalonSRX grey_motor;
   
   @Override
   public void robotInit() {
-    The_One_Motor_To_Rule_Them_All = new CANSparkMax(Can_Spark_ID, MotorType.kBrushless);
+    Spike_Motor = new CANSparkMax(Can_Spark_ID, MotorType.kBrushless);
     TheOtherOne = new TalonFX(FalconID);
+    grey_motor = new TalonSRX(TalonSRX_ID);
      // Set talon parameters to default values
       TheOtherOne.configFactoryDefault();
 
@@ -31,7 +35,7 @@ public class Robot extends TimedRobot {
     TheOtherOne.setSensorPhase(true);  // correct encoder to motor direction
      
     // Tell the talon that he has a quad encoder
-    TheOtherOne.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
+   // TheOtherOne.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 30);
    
     // Set minimum output (closed loop)  to 0 for now
     TheOtherOne.configNominalOutputForward(0, 30);
@@ -59,8 +63,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    The_One_Motor_To_Rule_Them_All.set(.1);
-    TheOtherOne.set(ControlMode.PercentOutput, .1);
+    Spike_Motor.set(.1);
+    TheOtherOne.set(ControlMode.PercentOutput, .5);
+    grey_motor.set(ControlMode.PercentOutput, .1);
   }
 
   @Override
