@@ -10,8 +10,19 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.simulation.JoystickSim;
 
 
 public class Robot extends TimedRobot {
@@ -19,15 +30,30 @@ public class Robot extends TimedRobot {
   private static final int TalonSRX_ID = 30;
   private static final int Can_Spark_ID = 40;
   private static final int FalconID = 50;
+  private static final int leverOne_ID = 4;
+  private Joystick leverOne;
   private TalonFX TheOtherOne;
   private CANSparkMax Spike_Motor;
   private TalonSRX grey_motor;
+  private UsbCamera camera1;
+  private UsbCamera camera2;
+  private UsbCamera camera3;
+  private NetworkTableEntry cameraSelection;
+  private VideoSink server;
+  
   
   @Override
   public void robotInit() {
     Spike_Motor = new CANSparkMax(Can_Spark_ID, MotorType.kBrushless);
     TheOtherOne = new TalonFX(FalconID);
     grey_motor = new TalonSRX(TalonSRX_ID);
+    leverOne = new Joystick(leverOne_ID);
+    camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+    camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+    camera3 = CameraServer.getInstance().startAutomaticCapture(2);
+
+    cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
+    
      // Set talon parameters to default values
       TheOtherOne.configFactoryDefault();
 
@@ -74,10 +100,24 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopInit() {}
+  public void teleopInit() {
+    
+
+  }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if (leverOne.getRawButtonPressed(2)) {
+      System.out.println("Setting camera 3");
+      Shuffleboard.selectTab("LimeLight");
+  }else if (leverOne.getRawButtonPressed(1) && !(leverOne.getRawButton(2)))  {
+      System.out.println("Setting camera 1");
+      Shuffleboard.selectTab("Back");
+  }else if (leverOne.getRawButtonReleased(1) && !(leverOne.getRawButton(2))) {
+    System.out.println("Setting camera 2");
+    Shuffleboard.selectTab("Front");
+  }
+  }
 
   @Override
   public void disabledInit() {}
