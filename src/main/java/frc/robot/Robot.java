@@ -17,8 +17,10 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot {
   private UsbCamera camera3;
   private NetworkTableEntry cameraSelection;
   private VideoSink server;
+  private DigitalInput input;
+  private Ultrasonic ultrasonic;
   
   
   @Override
@@ -54,8 +58,11 @@ public class Robot extends TimedRobot {
     camera1 = CameraServer.startAutomaticCapture(0);
     camera2 = CameraServer.startAutomaticCapture(1);
     camera3 = CameraServer.startAutomaticCapture(2);
+    input = new DigitalInput(0);
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
+    input.get();
+
     
      // Set talon parameters to default values
       TheOtherOne.configFactoryDefault();
@@ -104,7 +111,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    
 
   }
 
@@ -119,7 +125,16 @@ public class Robot extends TimedRobot {
   }else if (leverOne.getRawButtonReleased(1) && !(leverOne.getRawButton(2))) {
     System.out.println("Setting camera 2");
     Shuffleboard.selectTab("Front");
+    }
+  if (input.get() == true) {
+    System.out.println("Seeing Ball");
+    SmartDashboard.putBoolean("BallSensor", true);
   }
+  else {
+    System.out.println("Not Seeing Ball");
+    SmartDashboard.putBoolean("BallSensor", false);
+  }
+  SmartDashboard.putNumber("Distance", (ultrasonic.getRangeMM()*10));
   }
 
   @Override
