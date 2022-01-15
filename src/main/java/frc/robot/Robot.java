@@ -4,20 +4,23 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.cscore.UsbCamera;
+import edu.wpi.first.cscore.VideoSink;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSink;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
@@ -48,9 +51,9 @@ public class Robot extends TimedRobot {
     TheOtherOne = new TalonFX(FalconID);
     grey_motor = new TalonSRX(TalonSRX_ID);
     leverOne = new Joystick(leverOne_ID);
-    camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-    camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-    camera3 = CameraServer.getInstance().startAutomaticCapture(2);
+    camera1 = CameraServer.startAutomaticCapture(0);
+    camera2 = CameraServer.startAutomaticCapture(1);
+    camera3 = CameraServer.startAutomaticCapture(2);
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     
