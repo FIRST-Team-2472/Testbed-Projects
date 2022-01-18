@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -28,6 +29,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.JoystickSim;
+import edu.wpi.first.wpilibj.simulation.UltrasonicSim;
 
 
 public class Robot extends TimedRobot {
@@ -46,7 +48,9 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry cameraSelection;
   private VideoSink server;
   private DigitalInput input;
-  private Ultrasonic ultrasonic;
+  private DigitalInput switchOne;
+  private AnalogInput analog;
+  
   
   
   @Override
@@ -59,9 +63,13 @@ public class Robot extends TimedRobot {
     camera2 = CameraServer.startAutomaticCapture(1);
     camera3 = CameraServer.startAutomaticCapture(2);
     input = new DigitalInput(0);
+    analog = new AnalogInput(0);
+    switchOne = new DigitalInput(1);
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     input.get();
+    switchOne.get();
+    analog.getValue();
 
     
      // Set talon parameters to default values
@@ -134,8 +142,17 @@ public class Robot extends TimedRobot {
     System.out.println("Not Seeing Ball");
     SmartDashboard.putBoolean("BallSensor", false);
   }
-  SmartDashboard.putNumber("Distance", (ultrasonic.getRangeMM()*10));
+  SmartDashboard.putNumber("Distance", (analog.getVoltage()*3));
+  
+  if (switchOne.get() == true) {
+    System.out.println("Contact");
+    SmartDashboard.putBoolean("Reached Bar?", true);
+  } else {
+    System.out.println("Still Going");
+    SmartDashboard.putBoolean("Reached Bar?", false);
   }
+  }
+  
 
   @Override
   public void disabledInit() {}
