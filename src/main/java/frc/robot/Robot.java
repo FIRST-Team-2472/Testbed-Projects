@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 
@@ -12,13 +13,18 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.ColorSensorV3.RawColor;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -50,6 +56,10 @@ public class Robot extends TimedRobot {
   private DigitalInput input;
   private DigitalInput switchOne;
   private AnalogInput analog;
+  private final I2C.Port i2cPort = I2C.Port.kOnboard;
+  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
+  private final ColorMatch m_colorMatcher = new ColorMatch();
+
   
   
   
@@ -65,11 +75,15 @@ public class Robot extends TimedRobot {
     input = new DigitalInput(0);
     analog = new AnalogInput(0);
     switchOne = new DigitalInput(1);
+    
+    
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     input.get();
     switchOne.get();
     analog.getValue();
+
+    
 
     
      // Set talon parameters to default values
@@ -101,7 +115,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-
 
   }
 
@@ -142,7 +155,7 @@ public class Robot extends TimedRobot {
     System.out.println("Not Seeing Ball");
     SmartDashboard.putBoolean("BallSensor", false);
   }
-  SmartDashboard.putNumber("Distance", (analog.getVoltage()*3));
+  SmartDashboard.putNumber("Distance", ((analog.getVoltage()*3)*12));
   
   if (switchOne.get() == true) {
     System.out.println("Contact");
@@ -151,6 +164,30 @@ public class Robot extends TimedRobot {
     System.out.println("Still Going");
     SmartDashboard.putBoolean("Reached Bar?", false);
   }
+  Color detectedColor = m_colorSensor.getColor();
+  ColorMatchResult match = m_colorMatcher.matchClosestColor(detectedColor);
+  RawColor colorSensorV3 = m_colorSensor.getRawColor();
+  String colorString;
+  
+  SmartDashboard.putNumber("R", m_colorSensor.getRed());
+  SmartDashboard.putNumber("G", m_colorSensor.getGreen());
+  SmartDashboard.putNumber("B", m_colorSensor.getBlue());
+
+  m_colorSensor.getRawColor();
+
+  if (((m_colorSensor.getRed() + m_colorSensor.getBlue() + m_colorSensor.getGreen()) / 3) < 12) {
+    System.out.println("Ready to Climb");
+    SmartDashboard.putBoolean("Seeing Black?", true);
+  }
+  else {
+    System.out.println("Not Ready to Climb");
+    SmartDashboard.putBoolean("Seeing Black?", false);
+  }
+
+
+
+
+
   }
   
 
