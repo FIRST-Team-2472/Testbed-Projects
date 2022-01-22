@@ -22,7 +22,6 @@ import com.revrobotics.ColorSensorV3.RawColor;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,7 +34,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.JoystickSim;
-import edu.wpi.first.wpilibj.simulation.UltrasonicSim;
 
 
 public class Robot extends TimedRobot {
@@ -54,6 +52,7 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry cameraSelection;
   private VideoSink server;
   private DigitalInput input;
+<<<<<<< HEAD
   private DigitalInput switchOne;
   private AnalogInput analog;
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -61,6 +60,9 @@ public class Robot extends TimedRobot {
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
   
+=======
+  private Ultrasonic ultrasonic;
+>>>>>>> parent of df43666 (Distance sensor)
   
   
   @Override
@@ -73,15 +75,16 @@ public class Robot extends TimedRobot {
     camera2 = CameraServer.startAutomaticCapture(1);
     camera3 = CameraServer.startAutomaticCapture(2);
     input = new DigitalInput(0);
+<<<<<<< HEAD
     analog = new AnalogInput(0);
     switchOne = new DigitalInput(1);
     
     
+=======
+>>>>>>> parent of df43666 (Distance sensor)
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     input.get();
-    switchOne.get();
-    analog.getValue();
 
     
 
@@ -155,6 +158,7 @@ public class Robot extends TimedRobot {
     System.out.println("Not Seeing Ball");
     SmartDashboard.putBoolean("BallSensor", false);
   }
+<<<<<<< HEAD
   SmartDashboard.putNumber("Distance", ((analog.getVoltage()*3)*12));
   
   if (switchOne.get() == true) {
@@ -188,8 +192,10 @@ public class Robot extends TimedRobot {
 
 
 
+=======
+  SmartDashboard.putNumber("Distance", (ultrasonic.getRangeMM()*10));
+>>>>>>> parent of df43666 (Distance sensor)
   }
-  
 
   @Override
   public void disabledInit() {}
