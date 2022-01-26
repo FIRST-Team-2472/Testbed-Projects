@@ -5,20 +5,22 @@
 package frc.robot;
 
 
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
 
 public class Robot extends TimedRobot {
 
-  
+  NetworkTable hi;
 
   
   @Override
   public void robotInit() 
   {
-
+    
   }
 
   @Override
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
+    boolean teamColor = SmartDashboard.getEntry("IsRedAlliance");
   }
 
   @Override
