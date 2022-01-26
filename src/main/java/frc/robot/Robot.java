@@ -42,12 +42,14 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    TheOtherOne.set(ControlMode.PercentOutput, .5);
+    TheOtherOne.set(ControlMode.PercentOutput, 0.1);
   }
 
   @Override
   public void autonomousPeriodic() {
     SmartDashboard.putNumber("Faclcon Motor Value", TheOtherOne.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Falcon Forward Limit Switch", TheOtherOne.isFwdLimitSwitchClosed());
+    SmartDashboard.putNumber("Falcon Reverse Limit Switch", TheOtherOne.isRevLimitSwitchClosed());
   }
 
   @Override
