@@ -38,22 +38,24 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    //create/find shuffleboard tab
     main = Shuffleboard.getTab("01");
+    //declare a default instance of to access FMSInfo
     inst = NetworkTableInstance.getDefault();
 
     //string tells which entry to look at; boolean is just a DEFULT vaule
     teamColor = main.add("3", false).getEntry();
+    //how to access FMSInfo don't ask me how it works it just does
     FMSInfo = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
-    //test = main.add("Test", true).getEntry();
     
+    //need to provide a defult vaule if can't find find value
+    System.out.println(teamColor.getBoolean(false));
+    System.out.println(FMSInfo.getBoolean(false));
   }
 
   @Override
   public void autonomousPeriodic() {
-    //need to provide a defult vaule if can't find find value
-    //System.out.println(teamColor.getBoolean(false));
-    System.out.println(FMSInfo.getBoolean(false));
-    //System.out.println(SmartDashboard.getBoolean("FMSInfo/IsRedAlliance", false));
+
   }
 
   @Override
