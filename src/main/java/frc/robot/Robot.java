@@ -6,15 +6,22 @@ package frc.robot;
 
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 
 
 
 public class Robot extends TimedRobot {
 
-  NetworkTable hi;
+  ShuffleboardTab main;
+  NetworkTableEntry teamColor, FMSInfo;
+  NetworkTableInstance inst;
 
   
   @Override
@@ -31,12 +38,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    main = Shuffleboard.getTab("01");
+    inst = NetworkTableInstance.getDefault();
 
+    //string tells which entry to look at; boolean is just a DEFULT vaule
+    teamColor = main.add("3", false).getEntry();
+    FMSInfo = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
+    //test = main.add("Test", true).getEntry();
+    
   }
 
   @Override
   public void autonomousPeriodic() {
-    boolean teamColor = SmartDashboard.getEntry("IsRedAlliance");
+    //need to provide a defult vaule if can't find find value
+    //System.out.println(teamColor.getBoolean(false));
+    System.out.println(FMSInfo.getBoolean(false));
+    //System.out.println(SmartDashboard.getBoolean("FMSInfo/IsRedAlliance", false));
   }
 
   @Override
