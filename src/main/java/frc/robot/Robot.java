@@ -8,6 +8,7 @@ package frc.robot;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -20,14 +21,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
   ShuffleboardTab main;
-  NetworkTableEntry teamColor, FMSInfo;
+  NetworkTableEntry bruh, getTeamColor;
   NetworkTableInstance inst;
+  DigitalOutput Arduino;
+
 
   
   @Override
   public void robotInit() 
   {
-    
+    Arduino = new DigitalOutput(4);
+
   }
 
   @Override
@@ -38,19 +42,23 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    Arduino.disablePWM();
+    Arduino.set(true);
+
+
     //create/find shuffleboard tab
     main = Shuffleboard.getTab("01");
     //declare a default instance of to access FMSInfo
     inst = NetworkTableInstance.getDefault();
 
     //string tells which entry to look at; boolean is just a DEFULT vaule
-    teamColor = main.add("3", false).getEntry();
+    bruh = main.add("3", false).getEntry();
     //how to access FMSInfo don't ask me how it works it just does
-    FMSInfo = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
+    getTeamColor = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
     
     //need to provide a defult vaule if can't find find value
-    System.out.println(teamColor.getBoolean(false));
-    System.out.println(FMSInfo.getBoolean(false));
+    System.out.println(bruh.getBoolean(false));
+    System.out.println(getTeamColor.getBoolean(false));
   }
 
   @Override
