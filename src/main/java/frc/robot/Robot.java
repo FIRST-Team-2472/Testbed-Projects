@@ -23,6 +23,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -152,7 +153,7 @@ public class Robot extends TimedRobot {
     System.out.println("Not Seeing Ball");
     SmartDashboard.putBoolean("BallSensor", false);
   }
-<<<<<<< HEAD
+//<<<<<<< HEAD
   SmartDashboard.putNumber("Distance", ((analog.getVoltage()*3)*12));
   
   if (switchOne.get() == true) {
