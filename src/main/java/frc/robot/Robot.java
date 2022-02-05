@@ -52,7 +52,6 @@ public class Robot extends TimedRobot {
   private NetworkTableEntry cameraSelection;
   private VideoSink server;
   private DigitalInput input;
-<<<<<<< HEAD
   private DigitalInput switchOne;
   private AnalogInput analog;
   private final I2C.Port i2cPort = I2C.Port.kOnboard;
@@ -60,9 +59,7 @@ public class Robot extends TimedRobot {
   private final ColorMatch m_colorMatcher = new ColorMatch();
 
   
-=======
   private Ultrasonic ultrasonic;
->>>>>>> parent of df43666 (Distance sensor)
   
   
   @Override
@@ -75,13 +72,10 @@ public class Robot extends TimedRobot {
     camera2 = CameraServer.startAutomaticCapture(1);
     camera3 = CameraServer.startAutomaticCapture(2);
     input = new DigitalInput(0);
-<<<<<<< HEAD
     analog = new AnalogInput(0);
     switchOne = new DigitalInput(1);
     
     
-=======
->>>>>>> parent of df43666 (Distance sensor)
 
     cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
     input.get();
@@ -192,9 +186,7 @@ public class Robot extends TimedRobot {
 
 
 
-=======
   SmartDashboard.putNumber("Distance", (ultrasonic.getRangeMM()*10));
->>>>>>> parent of df43666 (Distance sensor)
   }
 
   @Override
