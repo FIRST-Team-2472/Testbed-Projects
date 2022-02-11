@@ -23,14 +23,20 @@ public class Robot extends TimedRobot {
   ShuffleboardTab main;
   NetworkTableEntry bruh, getTeamColor;
   NetworkTableInstance inst;
-  DigitalOutput Arduino;
+  DigitalOutput arduinoRed, arduinoGreen, arduinoYellow;
 
 
   
   @Override
   public void robotInit() 
   {
-    Arduino = new DigitalOutput(4);
+    arduinoRed = new DigitalOutput(4);
+    arduinoGreen = new DigitalOutput(5);
+    arduinoYellow = new DigitalOutput(6);
+
+    arduinoRed.disablePWM();
+    arduinoGreen.disablePWM();
+    arduinoYellow.disablePWM();
 
   }
 
@@ -42,8 +48,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    Arduino.disablePWM();
-    Arduino.set(true);
+
 
 
     //create/find shuffleboard tab
@@ -52,18 +57,22 @@ public class Robot extends TimedRobot {
     inst = NetworkTableInstance.getDefault();
 
     //string tells which entry to look at; boolean is just a DEFULT vaule
-    bruh = main.add("3", false).getEntry();
+    //bruh = main.add("3", false).getEntry();
     //how to access FMSInfo don't ask me how it works it just does
     getTeamColor = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
     
     //need to provide a defult vaule if can't find find value
-    System.out.println(bruh.getBoolean(false));
+    //System.out.println(bruh.getBoolean(false));
     System.out.println(getTeamColor.getBoolean(false));
+
+    arduinoRed.set(getTeamColor.getBoolean(false));
+    arduinoGreen.set(true);
+    arduinoYellow.set(true);
   }
 
   @Override
   public void autonomousPeriodic() {
-
+    arduinoRed.set(getTeamColor.getBoolean(false));
   }
 
   @Override
