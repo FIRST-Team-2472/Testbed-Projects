@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     inst = NetworkTableInstance.getDefault();
 
     //string tells which entry to look at; boolean is just a DEFULT vaule
-    //bruh = main.add("3", false).getEntry();
+    bruh = main.add("3", false).getEntry();
     //how to access FMSInfo don't ask me how it works it just does
     getTeamColor = inst.getTable("FMSInfo").getEntry("IsRedAlliance");
     
@@ -72,8 +72,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-    arduinoRed.set(getTeamColor.getBoolean(false));
-  }
+    arduinoRed.set(bruh.getBoolean(false));
+   }
 
   @Override
   public void teleopInit() {
