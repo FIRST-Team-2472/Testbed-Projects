@@ -9,9 +9,14 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DigitalOutput;
+import edu.wpi.first.wpilibj.DigitalSource;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Relay.Direction;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.simulation.RelaySim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -23,20 +28,16 @@ public class Robot extends TimedRobot {
   ShuffleboardTab main;
   NetworkTableEntry bruh, getTeamColor;
   NetworkTableInstance inst;
-  DigitalOutput arduinoRed, arduinoGreen, arduinoYellow;
+  Relay arduinoRed,arduinoGreen, arduinoYellow;
 
 
   
   @Override
   public void robotInit() 
   {
-    arduinoRed = new DigitalOutput(4);
-    arduinoGreen = new DigitalOutput(5);
-    arduinoYellow = new DigitalOutput(6);
-
-    arduinoRed.disablePWM();
-    arduinoGreen.disablePWM();
-    arduinoYellow.disablePWM();
+    arduinoRed = new Relay(0, Direction.kForward);
+    arduinoGreen = new Relay(1, Direction.kForward);
+    arduinoYellow = new Relay(2, Direction.kForward);
 
   }
 
@@ -65,14 +66,16 @@ public class Robot extends TimedRobot {
     //System.out.println(bruh.getBoolean(false));
     System.out.println(getTeamColor.getBoolean(false));
 
-    arduinoRed.set(getTeamColor.getBoolean(false));
-    arduinoGreen.set(true);
-    arduinoYellow.set(true);
+    if (getTeamColor.getBoolean(false)) arduinoRed.set(Value.kOff);
+    else arduinoRed.set(Value.kOn);
+    arduinoGreen.set(Value.kOn);
+    arduinoYellow.set(Value.kOn);
   }
 
   @Override
   public void autonomousPeriodic() {
-    arduinoRed.set(bruh.getBoolean(false));
+    if (getTeamColor.getBoolean(false)) arduinoRed.set(Value.kOff);
+    else arduinoRed.set(Value.kOn);
    }
 
   @Override
