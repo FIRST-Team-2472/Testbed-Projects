@@ -9,8 +9,6 @@ import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 
-import java.lang.ModuleLayer.Controller;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -42,19 +40,21 @@ import edu.wpi.first.wpilibj.simulation.JoystickSim;
 
 public class Robot extends TimedRobot {
 
-  private XboxController logiController = new XboxController(0);
+
   private UsbCamera camera1;
   private UsbCamera camera2;
+  private XboxController xboxController = new XboxController(0);
   private NetworkTableEntry cameraSelection;
+  private VideoSink server;
   
   
   @Override
   public void robotInit() {
+  
     camera1 = CameraServer.startAutomaticCapture(0);
     camera2 = CameraServer.startAutomaticCapture(1);
-    
-    cameraSelection = NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection");
 
+    server = CameraServer.getServer();
   }
 
   @Override
@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    
+   
   }
 
   @Override
@@ -74,19 +74,19 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-
+    cameraSelection = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("CameraSelection");
   }
 
   @Override
   public void teleopPeriodic() {
-    if (logiController.getLeftBumperPressed()) {
+    if (xboxController.getLeftBumperPressed()) {
       System.out.println("Setting camera 2");
-      cameraSelection.setString(camera2.getName());
-  } else if (logiController.getLeftBumperReleased()) {
+      server.setSource(camera2);
+  } else if (xboxController.getLeftBumperReleased()) {
       System.out.println("Setting camera 1");
-      cameraSelection.setString(camera1.getName());
+      server.setSource(camera1);
   }
-}
+  }
 
   @Override
   public void disabledInit() {}
