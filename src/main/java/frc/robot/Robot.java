@@ -6,25 +6,25 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
-
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 
 
 public class Robot extends TimedRobot {
+  private final TalonSRX Motor = new TalonSRX(Constants.motor);
 
-  
 
   
   @Override
-  public void robotInit() 
+  public void robotInit()  
   {
 
   }
 
   @Override
   public void robotPeriodic() {
-
-
+    Motor.set(ControlMode.PercentOutput, 1.0);
   }
 
   @Override
