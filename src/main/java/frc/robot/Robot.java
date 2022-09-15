@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
+import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.cscore.VideoSink;
 
@@ -50,11 +51,16 @@ public class Robot extends TimedRobot {
   
   @Override
   public void robotInit() {
+    ShuffleboardTab TestBoard = Shuffleboard.getTab("Driver Board");
   
-    camera1 = CameraServer.startAutomaticCapture(0);
+    /*camera1 = CameraServer.startAutomaticCapture(0);
     camera2 = CameraServer.startAutomaticCapture(1);
 
+    cameraSelection = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("CameraSelection");
+
     server = CameraServer.getServer();
+
+    TestBoard.addCamera("the camera of the plebs", "camera1", "mjpeg:http://roboRIO-2016-FRC.local:1181/?action=stream");*/
   }
 
   @Override
@@ -74,7 +80,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    cameraSelection = NetworkTableInstance.getDefault().getTable("SmartDashboard").getEntry("CameraSelection");
+    
   }
 
   @Override
