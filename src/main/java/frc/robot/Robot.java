@@ -13,8 +13,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 public class Robot extends TimedRobot {
   private final TalonSRX Motor = new TalonSRX(Constants.motor);
-
-
   
   @Override
   public void robotInit()  
@@ -24,7 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    Motor.set(ControlMode.PercentOutput, 1.0);
+    Motor.set(ControlMode.PercentOutput, .25);
   }
 
   @Override
