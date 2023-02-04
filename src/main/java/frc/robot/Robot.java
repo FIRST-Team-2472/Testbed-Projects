@@ -8,21 +8,23 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Robot extends TimedRobot {
-  private final TalonSRX Motor = new TalonSRX(Constants.motor);
   
+  private  CANSparkMax intake;
   @Override
   public void robotInit()  
   {
-
+    intake = new CANSparkMax(40, MotorType.kBrushless);
+  
   }
 
   @Override
   public void robotPeriodic() {
-    Motor.set(ControlMode.PercentOutput, .25);
+      intake.set(.1);
   }
 
   @Override
