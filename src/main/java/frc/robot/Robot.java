@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 
 public class Robot extends TimedRobot {  
   
@@ -15,11 +16,13 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    intake = new 
+    TurnTable = new TalonSRX(1);
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    TurnTable
+  }
 
   @Override
   public void autonomousInit() {}
