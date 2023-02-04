@@ -4,12 +4,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.IterativeRobotBase;
 
 public class Robot extends TimedRobot {  
   
@@ -22,7 +24,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    TurnTable.set(-.6);
+    TurnTable.set(ControlMode.PercentOutput,.1);
   }
 
   @Override
