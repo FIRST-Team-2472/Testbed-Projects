@@ -1,5 +1,5 @@
 package frc.robot;
 
 public class Constants {
-    private final TalonSRX = 
+    public static final int TurnTable = 01;
 }

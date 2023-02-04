@@ -14,7 +14,9 @@ public class Robot extends TimedRobot {
   private TalonSRX TurnTable;
 
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    intake = new 
+  }
 
   @Override
   public void robotPeriodic() {}
