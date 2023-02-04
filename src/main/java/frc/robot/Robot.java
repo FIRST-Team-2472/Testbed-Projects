@@ -6,10 +6,11 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 
 
 public class Robot extends TimedRobot {
@@ -24,7 +25,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-      intake.set(.1);
+      intake.set(-.6);
   }
 
   @Override
