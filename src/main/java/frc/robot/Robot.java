@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 public class Robot extends TimedRobot {  
   
@@ -21,7 +22,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    TurnTable
+    TurnTable.set(-.6);
   }
 
   @Override
