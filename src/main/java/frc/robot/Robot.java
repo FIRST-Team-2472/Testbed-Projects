@@ -4,10 +4,15 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {  
   
+  private TalonSRX TurnTable;
+
   @Override
   public void robotInit() {}
 
