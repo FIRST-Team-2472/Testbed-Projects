@@ -12,6 +12,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
+
 public class Robot extends TimedRobot {
   
   private  CANSparkMax intake;
@@ -24,12 +25,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    
-    if(xboxController.getAButton())
-      intake.set(1);
-    else if(xboxController.getBButton())
-      intake.set(-1);
-    else intake.set(0);
+      intake.set(.1);
   }
 
   @Override
