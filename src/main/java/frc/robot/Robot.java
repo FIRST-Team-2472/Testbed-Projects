@@ -6,8 +6,8 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import edu.wpi.first.wpilibj.XboxController;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -15,16 +15,21 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class Robot extends TimedRobot {
   
   private  CANSparkMax intake;
+  private XboxController xboxController = new XboxController(2);
   @Override
   public void robotInit()  
   {
     intake = new CANSparkMax(40, MotorType.kBrushless);
-  
   }
 
   @Override
   public void robotPeriodic() {
-      intake.set(.1);
+    
+    if(xboxController.getAButton())
+      intake.set(1);
+    else if(xboxController.getBButton())
+      intake.set(-1);
+    else intake.set(0);
   }
 
   @Override
