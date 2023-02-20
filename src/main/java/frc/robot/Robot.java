@@ -25,7 +25,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-      intake.set(.1);
+    if(xboxController.getAButton())
+      intake.set(1);
+    else if(xboxController.getBButton())
+      intake.set(-1);
+    else intake.set(0);
   }
 
   @Override
